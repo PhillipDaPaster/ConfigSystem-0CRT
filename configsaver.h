@@ -56,7 +56,7 @@ extern "C" {
 
 namespace CFG {
 
-    struct ConfigVarInitializerLite {
+    struct ConfigVarInitializer {
         const char* m_cpp_ns_path{ nullptr };
         const char* m_name{ nullptr };
         unsigned int m_key_hash{ 0 };
@@ -69,13 +69,13 @@ namespace CFG {
         bool m_no_save{ false };
     };
 
-#ifndef CONFIGSAVER_LITE_MAX_VARS
-#define CONFIGSAVER_LITE_MAX_VARS 512
+#ifndef CONFIGSAVER_MAX_VARS
+#define CONFIGSAVER_MAX_VARS 512
 #endif
 
     typedef unsigned long long size_t_like;
 
-    inline ConfigVarInitializerLite vars[CONFIGSAVER_LITE_MAX_VARS]{};
+    inline ConfigVarInitializer vars[CONFIGSAVER_MAX_VARS]{};
     inline size_t_like vars_count = 0;
 
     enum TypeId : unsigned int {
@@ -196,9 +196,9 @@ namespace CFG {
     }
 
     inline void RegisterVar(const char* cpp_ns_path, const char* name, void* ptr, unsigned int type_id, bool no_save) {
-        if (vars_count >= CONFIGSAVER_LITE_MAX_VARS)
+        if (vars_count >= CONFIGSAVER_MAX_VARS)
             return;
-        ConfigVarInitializerLite v{};
+        ConfigVarInitializer v{};
         v.m_cpp_ns_path = cpp_ns_path;
         v.m_name = name;
         v.m_ptr = ptr;
@@ -502,7 +502,7 @@ namespace CFG {
 #define CFGVAR(cpp_namespacepath, configname, state) \
 namespace cpp_namespacepath { \
     inline auto configname = state; \
-    namespace configvar_initializers_lite { \
+    namespace configvar_initializers { \
         inline auto configname##_initializer = []() { \
             CFG::RegisterVar(#cpp_namespacepath, #configname, &configname, CFG::TypeIdOf<decltype(configname)>(), false); \
             return true; \
@@ -513,7 +513,7 @@ namespace cpp_namespacepath { \
 #define CFGVAR_NOSAVE(cpp_namespacepath, configname, state) \
 namespace cpp_namespacepath { \
     inline auto configname = state; \
-    namespace configvar_initializers_lite { \
+    namespace configvar_initializers { \
         inline auto configname##_initializer = []() { \
             CFG::RegisterVar(#cpp_namespacepath, #configname, &configname, CFG::TypeIdOf<decltype(configname)>(), true); \
             return true; \
