@@ -161,7 +161,9 @@ namespace CFG {
     }
 
     inline void BuildKey(const char* cpp_ns_path, const char* name, char* out, size_t_like out_cap) {
-        if (!out || out_cap == 0) return;
+        if (!out || out_cap == 0) 
+            return;
+        
         size_t_like n = 0;
         const char* p = cpp_ns_path ? cpp_ns_path : "";
         char seg[128];
@@ -198,6 +200,7 @@ namespace CFG {
     inline void RegisterVar(const char* cpp_ns_path, const char* name, void* ptr, unsigned int type_id, bool no_save) {
         if (vars_count >= CONFIGSAVER_MAX_VARS)
             return;
+        
         ConfigVarInitializer v{};
         v.m_cpp_ns_path = cpp_ns_path;
         v.m_name = name;
