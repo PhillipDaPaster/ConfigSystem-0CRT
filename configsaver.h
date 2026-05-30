@@ -210,7 +210,9 @@ namespace CFG {
     }
 
     static inline void TrimRight(char* s) {
-        if (!s) return;
+        if (!s)
+            return;
+        
         char* end = s;
         while (*end) ++end;
         while (end > s && IsWs(end[-1])) --end;
@@ -223,7 +225,9 @@ namespace CFG {
     }
 
     static inline int ParseInt(const char* s, int& out) {
-        if (!s) return 0;
+        if (!s) 
+            return 0;
+        
         int sign = 1;
         if (*s == '-') { sign = -1; ++s; }
         int v = 0;
@@ -269,7 +273,9 @@ namespace CFG {
 
 #ifdef CFG_USE_IMCOLOR
     static inline int ParseImColor(const char* s, ImColor& out) {
-        if (!s) return 0;
+        if (!s) 
+            return 0;
+        
         float v[4]{};
         const char* p = s;
         for (int i = 0; i < 4; ++i) {
@@ -300,7 +306,8 @@ namespace CFG {
             CFG_FILE_ATTRIBUTE_NORMAL,
             0
         );
-        if (!h || h == CFG_INVALID_HANDLE_VALUE) return;
+        if (!h || h == CFG_INVALID_HANDLE_VALUE) 
+            return;
 
         auto write_all = [&](const char* s) {
             if (!s)
@@ -318,7 +325,8 @@ namespace CFG {
 
         for (size_t_like i = 0; i < vars_count; ++i) {
             const auto& var = vars[i];
-            if (var.m_no_save) continue;
+            if (var.m_no_save) 
+                continue;
 
             write_all(var.m_key);
             write_all("=");
