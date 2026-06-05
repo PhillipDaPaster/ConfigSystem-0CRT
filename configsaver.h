@@ -5,8 +5,8 @@
 #include "imgui_internal.h" // put your projects file path here 
 #endif
 
-extern "C" {
-    void* __stdcall CreateFileA(
+extern "C" { // replace this with your k32 resolver aswell
+    void* __stdcall CreateFileA( 
         const char* lpFileName,
         unsigned long dwDesiredAccess,
         unsigned long dwShareMode,
