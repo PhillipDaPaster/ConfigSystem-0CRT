@@ -28,7 +28,7 @@ if you use this just know you can not use the crt less example on the json cfg s
 #define MAX_PATH 260
 #endif
 
-extern "C" {
+extern "C" { // replace this with your own k32 resolver so its truly 0 crt
     unsigned long __stdcall GetEnvironmentVariableA(const char* lpName, char* lpBuffer, unsigned long nSize);
     int __stdcall CreateDirectoryA(const char* lpPathName, void* lpSecurityAttributes);
 }
